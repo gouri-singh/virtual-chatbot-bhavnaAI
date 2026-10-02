@@ -283,3 +283,5 @@ The logo should reflect the meaning of “Bhavna” (emotion/feeling) combined w
 -   Engineering to scope voice/video infrastructure (STT, TTS, video processing) and provide effort estimates.
 
 -   Finalize logo design based on Section 8 direction.
+
+GitHub connection test
