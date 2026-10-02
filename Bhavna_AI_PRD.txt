@@ -1,0 +1,285 @@
+BHAVNA AI
+
+“A chatbot with speaking and texting from both sides.”
+
+Product Requirements Document (PRD)
+
+Version 1.0
+
+Date: August 6, 2026
+
+Status: Draft for Review
+
+Theme Colors: Yellow & White
+
+1. Product Overview
+
+1.1 Summary
+
+Bhavna AI is a multimodal conversational AI application that allows users to communicate with an AI assistant using text, voice, photo, and video — from both the user's side and the AI's side. The product positions itself as an emotionally aware, always-available assistant (“Bhavna” translates to “emotion/feeling”), capable of natural, human-like conversation across every input and output format.
+
+1.2 Problem Statement
+
+Most chatbot products restrict users to a single input mode (usually text) and respond in a single output mode. Users increasingly expect to switch fluidly between typing, speaking, and sharing visual context (photos/video) within the same conversation, and to receive responses in the format that suits their current context (e.g., audio while driving, text while in a meeting).
+
+1.3 Goals
+
+-   Provide a single AI assistant accessible via text, voice, photo, and video input.
+
+-   Allow the AI to respond in text or audio (male/female voice selection).
+
+-   Deliver a simple, secure authentication experience (mobile/email + password, OTP, Google Sign-In).
+
+-   Maintain full chat history and account management in an accessible menu.
+
+-   Establish a clean, friendly brand identity built around a yellow-and-white theme.
+
+1.4 Non-Goals (v1)
+
+-   Multi-user/group conversations.
+
+-   Third-party integrations (calendar, payments, smart home, etc.) — deferred to a later roadmap phase.
+
+-   Offline mode.
+
+2. Target Users & Personas
+
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  Persona                    Description                                                                                       Primary Need
+  -------------------------- ------------------------------------------------------------------------------------------------- ---------------------------------------
+  Everyday Chatter           General consumer looking for a conversational companion for questions, doubts, and casual talk.   Fast, natural text/voice answers
+
+  Hands-Busy User            Commuting, cooking, or multitasking; prefers speaking over typing.                                Reliable voice input/output
+
+  Visual Query User          Wants to ask about an object, document, or scene using a photo or video.                          Accurate photo/video understanding
+
+  Accessibility-First User   Prefers audio responses due to visual strain or reading difficulty.                               High-quality male/female voice output
+  --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3. User Authentication
+
+3.1 Login
+
+Users can log in using either their registered Mobile Number or Email Address, paired with a Password.
+
+-   Input field auto-detects whether the entry is a mobile number or an email.
+
+-   Password field includes a Show/Hide Password toggle (eye icon).
+
+-   “Forgot Password” link triggers an OTP-based reset flow.
+
+-   Inline validation errors for incorrect credentials, with a generic error message (no indication of whether the mobile/email or password was wrong, for security).
+
+-   “Continue with Google” button available on the same screen.
+
+3.2 Sign Up
+
+1.  User enters Mobile Number or Email.
+
+2.  System sends a One-Time Password (OTP) via SMS or email.
+
+3.  User enters the OTP to verify identity (resend option after a 30-second cooldown; OTP expires after 5 minutes).
+
+4.  User sets a Password, with a Show/Hide toggle and real-time strength indicator (minimum 8 characters, at least one number and one special character recommended).
+
+5.  Account is created and the user is taken to the Home Screen with a brief onboarding tour.
+
+3.3 Continue with Google
+
+Standard OAuth 2.0 Google Sign-In. On first use, the app creates an account automatically using the Google profile's name, email, and photo; subsequent logins authenticate directly without re-entering credentials.
+
+3.4 Authentication — Functional Requirements
+
+  ---------------------------------------------------------------------------------------------------------
+  ID          Requirement                                                                       Priority
+  ----------- --------------------------------------------------------------------------------- -----------
+  AUTH-01     System shall support login via mobile number or email + password.                 Must
+
+  AUTH-02     System shall provide a show/hide password toggle on all password fields.          Must
+
+  AUTH-03     System shall send and validate OTP for sign-up and password reset.                Must
+
+  AUTH-04     System shall support Google OAuth sign-in.                                        Must
+
+  AUTH-05     System shall enforce a minimum password strength policy.                          Should
+
+  AUTH-06     System shall lock the account temporarily after repeated failed login attempts.   Should
+
+  AUTH-07     System shall support session persistence (“stay logged in”).                      Could
+  ---------------------------------------------------------------------------------------------------------
+
+4. Main Interface (Home Screen)
+
+The home screen is the central hub, designed around simplicity and quick access to every communication mode.
+
+4.1 Home Screen Elements
+
+-   Photo Communication Option — camera/gallery icon to capture or upload an image for a query.
+
+-   Microphone Button — large, central, primary action button for voice input (press-to-talk or tap-to-toggle recording).
+
+-   Text Chat — persistent input bar for typing messages, always visible at the bottom of the screen.
+
+-   Video Communication Option — icon to start a live video session or upload a video clip as a query.
+
+4.2 Layout Notes
+
+-   Yellow-and-white theme: white background, yellow accents on primary actions (mic button, send button, active states).
+
+-   Bhavna AI logo/avatar displayed at the top of the screen, with a subtle animated state (listening/thinking/speaking) to give the assistant a sense of presence.
+
+-   Bottom navigation or floating action cluster groups the four input modes (text, mic, photo, video) for one-handed use.
+
+5. Chat Features
+
+5.1 Supported Input Types
+
+  -----------------------------------------------------------------------------------
+  Input Type          Description
+  ------------------- ---------------------------------------------------------------
+  Text                Standard typed message.
+
+  Voice               Spoken query, transcribed and/or processed directly as audio.
+
+  Video               Live video call or uploaded clip as the basis of a query.
+
+  Photo               Captured or uploaded image as the basis of a query.
+
+  Video with Text     Video attached alongside a typed caption/question.
+
+  Photo with Text     Photo attached alongside a typed caption/question.
+  -----------------------------------------------------------------------------------
+
+5.2 Supported Output Types
+
+-   Text — standard chat bubble response.
+
+-   Audio — spoken response in either a Male or Female voice, selectable in Settings and switchable per-conversation.
+
+5.3 Functional Requirements
+
+  -------------------------------------------------------------------------------------------------------------------------------
+  ID          Requirement                                                                                              Priority
+  ----------- -------------------------------------------------------------------------------------------------------- ----------
+  CHAT-01     All four input buttons (text, mic, photo, video) shall be enabled and accessible from the home screen.   Must
+
+  CHAT-02     User shall be able to attach a photo or video together with a typed caption in the same message.         Must
+
+  CHAT-03     System shall transcribe voice input to text for display in the chat log.                                 Must
+
+  CHAT-04     System shall generate a text response for every query by default.                                        Must
+
+  CHAT-05     System shall generate an audio response when audio output is enabled, using the selected voice.          Must
+
+  CHAT-06     User shall be able to switch between male and female voice at any time.                                  Should
+
+  CHAT-07     System shall support real-time video calls with the AI, not only uploaded clips.                         Should
+
+  CHAT-08     System shall show typing/recording/processing indicators during response generation.                     Should
+  -------------------------------------------------------------------------------------------------------------------------------
+
+6. Menu
+
+6.1 Account
+
+-   User Profile — displays Name, Email ID, Mobile Number, and Profile Photo, with an Edit option.
+
+-   Settings — manage notification preferences, default voice (male/female), language, privacy, and data controls.
+
+-   Logout — signs the user out and returns to the Login screen.
+
+6.2 New Chat
+
+Starts a fresh conversation thread, clearing current context while preserving the previous session in Chat History.
+
+6.3 Chat History
+
+A chronological, searchable list of past conversations. Each entry shows a preview snippet, date/time, and the input types used (text/voice/photo/video icons). Tapping an entry reopens the full conversation.
+
+7. AI Capability & Scope
+
+Bhavna AI is designed as a general-purpose conversational assistant. It should be capable of handling:
+
+-   General knowledge questions and doubts across any subject.
+
+-   Open-ended, natural conversation.
+
+-   Voice-based interactions with natural back-and-forth dialogue.
+
+-   Photo-based queries (e.g., identifying objects, reading text in an image, answering questions about a scene).
+
+-   Video-based queries (e.g., understanding an action or sequence shown in a clip).
+
+Note: exact response boundaries (e.g., safety filters, restricted topics) should be defined in a separate Trust & Safety / Content Policy document referenced by this PRD, since the underlying model provider's usage policies will govern what Bhavna AI can and cannot answer.
+
+8. Branding & Visual Identity
+
+8.1 App Name
+
+Bhavna AI
+
+8.2 Logo Direction
+
+The logo should reflect the meaning of “Bhavna” (emotion/feeling) combined with the AI/conversational nature of the product. Suggested direction:
+
+-   A speech-bubble or waveform motif merged with a subtle smile/face curve to convey warmth and emotional intelligence.
+
+-   Rounded, friendly typography for the wordmark “Bhavna AI.”
+
+-   Primary mark in yellow (#F2B705 or similar warm gold-yellow) on a white background, with a dark charcoal or deep-brown wordmark for contrast and readability.
+
+8.3 Theme Colors
+
+  ------------------------------------------------------------------------
+  Role                     Color                  Hex (suggested)
+  ------------------------ ---------------------- ------------------------
+  Primary                  Yellow                 #F2B705
+
+  Background               White                  #FFFFFF
+
+  Accent / Light Fill      Pale Yellow            #FFF6D9
+
+  Text (Primary)           Charcoal               #1A1A1A
+
+  Text (Secondary)         Grey                   #595959
+  ------------------------------------------------------------------------
+
+9. Non-Functional Requirements
+
+  ------------------------------------------------------------------------------------------------------------------------
+  Category           Requirement
+  ------------------ -----------------------------------------------------------------------------------------------------
+  Performance        Text responses in under 2 seconds; voice responses in under 4 seconds for typical queries.
+
+  Security           Passwords hashed and salted; OTPs single-use and time-limited; all traffic over HTTPS/TLS.
+
+  Privacy            User photos/videos processed per a clear retention policy; users can delete chat history and media.
+
+  Scalability        Backend must support concurrent voice and video sessions without degrading text chat performance.
+
+  Accessibility      Support screen readers on all auth and menu screens; audio output as an accessibility aid.
+
+  Platform           iOS and Android mobile apps, with a responsive web companion (scope to be confirmed).
+  ------------------------------------------------------------------------------------------------------------------------
+
+10. Open Questions
+
+6.  Should video calls be real-time (live AI video avatar) or limited to short uploaded clips in v1?
+
+7.  What languages should voice input/output support at launch?
+
+8.  Is there a payment/subscription tier, or is v1 fully free?
+
+9.  What is the data retention period for uploaded photos/videos?
+
+10. Will Bhavna AI have a distinct personality/tone guideline document?
+
+11. Next Steps
+
+-   Review and sign-off from stakeholders on scope (Sections 1–7).
+
+-   UX team to produce wireframes for Login, Sign Up, Home, Chat, and Menu screens using the yellow/white theme.
+
+-   Engineering to scope voice/video infrastructure (STT, TTS, video processing) and provide effort estimates.
+
+-   Finalize logo design based on Section 8 direction.
